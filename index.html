@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Crypto</title>
+    <meta name="description" content="E2E Encryption Chat">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+
+    <textarea id="text-box" placeholder="Type message"></textarea>
+    <button id="send-message" type="submit">Send</button>
+</body>
+<script>
+    window.onload = () => {
+
+      const getMessageEncoding = () => {
+        const messageBox = document.querySelector("#text-box");
+        let message = messageBox.value;
+        let enc = new TextEncoder();
+        return enc.encode(message);
+      };
+
+      const encryptMessage = async (key) => {
+        let encoded = getMessageEncoding();
+        return await window.crypto.subtle.encrypt(
+          {
+            name: "RSA-OAEP"
+          },
+          key,
+          encoded
+        );
+      };
+
+      const decryptMessage = async (key, message) => {
+        console.log(message);
+        console.log(key);
+        let decrypted = await window.crypto.subtle.decrypt(
+          {
+            name: "RSA-OAEP"
+          },
+          key,
+          message
+        );
+
+        let dec = new TextDecoder();
+
+        return dec.decode(decrypted);
+      };
+
+      window.crypto.subtle.generateKey(
+        {
+          name: "RSA-OAEP",
+          modulusLength: 4096,
+          publicExponent: new Uint8Array([1, 0, 1]),
+          hash: "SHA-512",
+        },
+        true,
+        ["encrypt", "decrypt"]
+      ).then((keyPair) => {
+        const encryptButton = document.getElementById("send-message");
+        encryptButton.addEventListener("click", async() => {
+          let message = await encryptMessage(keyPair.publicKey);
+          console.log(await decryptMessage(keyPair.privateKey, message))
+
+        });
+      });
+
+    };
+</script>
+</html>

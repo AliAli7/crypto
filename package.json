@@ -4,5 +4,11 @@
   "description": "E2E encryption app",
   "main": "index.js",
   "author": "Ali",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./index.js"
+  },
+  "dependencies": {
+    "nodemon": "^2.0.2"
+  }
 }
