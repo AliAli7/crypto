@@ -5,10 +5,15 @@ const hostname = '127.0.0.1';
 const port = 3000;
 
 const server = http.createServer((req, res) => {
-  const html = fs.readFileSync('./index.html');
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.write(html);
+  const path = './public'+(req.url === '/' ? '/index.html' : req.url);
+  if (fs.existsSync(path)) {
+    const html = fs.readFileSync(path);
+    // res.setHeader('Content-Type', 'text/html');
+    res.statusCode = 200;
+    res.write(html);
+    res.end();
+  }
+  res.statusCode = 404;
   res.end();
 });
 

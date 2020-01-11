@@ -1,0 +1,102 @@
+body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
+    grid-gap: 50px;
+    max-width: 100vw;
+    min-height: 100vh;
+    font-family: monospace;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+}
+
+textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.terminal {
+    background-color: #424242;
+    border-radius: 10px 10px 0px 0px;
+    padding: 20px;
+    height: 100%;
+}
+
+.terminal p,
+.terminal textarea {
+    margin-top: 30px;
+    color: #00C853;
+    word-break: break-all;
+    white-space: normal;
+    font-size: 1.2em;
+    background-color: #424242;
+    width: 100%;
+    height: calc(100% - 20px);
+    outline: none;
+    border: none;
+}
+
+.yellow,
+.yellow::before,
+.yellow::after {
+    background-color: #FFCC03;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    content: '';
+    position: absolute;
+    border: none;
+    outline: none;
+    transform: translateX(20px);
+}
+
+.yellow::before {
+    background-color: #FF453A;
+    transform: translateX(-20px);
+}
+
+.yellow::after {
+    background-color: #2FD74B;
+    transform: translateX(20px);
+}
+
+.btn {
+    padding: 10px;
+    margin: 15px 0 0 calc(50% - 10px);
+}
+
+.chat-area {
+    display: flex;
+    flex-direction: column;
+}
+
+.conversation {
+    overflow: scroll;
+    min-height: 500px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-area {
+    display: flex;
+    padding: 10px;
+}
+
+.message-area textarea {
+    width: 100%;
+}
+
+.bob-says {
+    align-self: flex-end;
+}
+
+.alice-says {
+}

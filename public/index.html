@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Crypto</title>
+    <meta name="description" content="E2E Encryption Chat">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <section class="">
+        <h1>My Key</h1>
+        <div class="terminal">
+            <div class="yellow"></div>
+            <p id="bob-public-key">MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAkpSiKzIeqMUF4KaYGGJL4qwOT7auEm4ZgrXwNSwxcYLR+6DvI9xyWAj+tL3ObMqSLRSn4QKAogPziFJdiezoiCfCwNvTAvWAtUwaMs161kzN86xyctgxahtkxoEhCKFvLsYm7ivd6BS1AeBDN4gelaArkjg8B7c0ysKw+33cs5/qI/LkyMN8tUt4UZsOJ8fFDeaJb4ZUGZzywxxVdGzQyZ9sOmBCg0NWcj/uBQQ76iPzO60DVAeKrwtqkHBt91iWcWXfxr5SODNZN5TLbXPOUN9h6A4B5ktJb3fY4xynJGZw7kWq7Tph6SQ1nbCfhQAfElB2gLmliiffZLMXgukmx6LvPSlARIHus4pyN0r+5ZvILhD+6MyMplkxDHi97IDuDufN6sh2FhVAHLATn0jKNqJt1ph6xfgXiXWgjm+f/C2xLrRsqrYYgFhF5RYx9ORdzN3sgSVgeVQYKyosG3AZNPQ8oL0bPe37h3DFhuPrM/G9aVtfVTPvO52SK0TEUkziPOLODdM2Ukwd7J4tsLweZ9a2ZtlYZvDs3gTXLYMeqWA1j+xwYlFU3v82Mrcn4yW1nEXnDJI39PxAztpzYNyidUZuyJWyWpo+DRdBET5K3gOMLezbNXeTMQji+y7hqErDEfX3RStsP/yKug+p0bgWKM9airkKosfuo7a5LgPAg/8CAwEAAQ==</p>
+        </div>
+    </section>
+    <section class="">
+        <h1>Alice's Key</h1>
+        <div class="terminal">
+            <div class="yellow"></div>
+            <textarea id="alice-public-key" placeholder="Enter key"></textarea>
+            <button class="btn" id="connect">Connect</button>
+        </div>
+    </section>
+    <section class="">
+        <h1>Video</h1>
+    </section>
+    <section class="chat-area">
+        <h1>Chat area</h1>
+        <div class="conversation">
+            <p class="bob-says">Hello I am Bob</p>
+            <p class="alice-says">hello I am Alice</p>
+        </div>
+        <div class="message-area">
+            <textarea id="text-box" placeholder="Type message"></textarea>
+            <button id="send-btn" type="submit">Send</button>
+        </div>
+    </section>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
+<script src="/script.js"></script>
+</html>
