@@ -5,12 +5,107 @@
     <title>Crypto</title>
     <meta name="description" content="E2E Encryption Chat">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 5fr;
+            grid-gap: 50px;
+            max-width: 100vw;
+            min-height: 100vh;
+            font-family: monospace;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .terminal {
+            background-color: #424242;
+            border-radius: 10px 10px 0px 0px;
+            padding: 20px;
+            height: 100%;
+        }
+
+        .terminal p,
+        .terminal textarea {
+            margin-top: 30px;
+            color: #00C853;
+            word-break: break-all;
+            white-space: normal;
+            font-size: 1.2em;
+            background-color: #424242;
+            width: 100%;
+            height: calc(100% - 20px);
+            outline: none;
+            border: none;
+        }
+
+        textarea {
+            font-family: inherit;
+            font-size: inherit;
+        }
+
+        .yellow,
+        .yellow::before,
+        .yellow::after {
+            background-color: #FFCC03;
+            border-radius: 50%;
+            width: 15px;
+            height: 15px;
+            content: '';
+            position: absolute;
+            border: none;
+            outline: none;
+            transform: translateX(20px);
+        }
+
+        .yellow::before {
+            background-color: #FF453A;
+            transform: translateX(-20px);
+        }
+
+        .yellow::after {
+            background-color: #2FD74B;
+            transform: translateX(20px);
+        }
+
+        .btn {
+            padding: 10px;
+            margin: 15px 0 0 calc(50% - 10px);
+        }
+    </style>
 </head>
 
 <body>
-
-    <textarea id="text-box" placeholder="Type message"></textarea>
-    <button id="send-message" type="submit">Send</button>
+    <section class="">
+        <h1>My Key</h1>
+        <div class="terminal">
+            <div class="yellow"></div>
+            <p id="bob-public-key"></p>
+        </div>
+    </section>
+    <section class="">
+        <h1>Alice's Key</h1>
+        <div class="terminal">
+            <div class="yellow"></div>
+            <textarea id="alice-public-key" placeholder="Enter key"></textarea>
+            <button class="btn" id="connect">Connect</button>
+        </div>
+    </section>
+    <section class="">
+        <h1>Video</h1>
+    </section>
+    <section class="">
+        <h1>Chat area</h1>
+        <textarea id="text-box" placeholder="Type message"></textarea>
+        <button id="send-message" type="submit">Send</button>
+    </section>
 </body>
 <script>
     window.onload = () => {
@@ -34,8 +129,6 @@
       };
 
       const decryptMessage = async (key, message) => {
-        console.log(message);
-        console.log(key);
         let decrypted = await window.crypto.subtle.decrypt(
           {
             name: "RSA-OAEP"
@@ -49,6 +142,18 @@
         return dec.decode(decrypted);
       };
 
+      const ab2str = buf => {
+        return String.fromCharCode.apply(null, new Uint8Array(buf));
+      };
+
+      const exportCryptoKey = async key => {
+        const exported = await window.crypto.subtle.exportKey("spki", key);
+        const exportedAsString = ab2str(exported);
+        const exportedAsBase64 = window.btoa(exportedAsString);
+
+        return exportedAsBase64;
+      };
+
       window.crypto.subtle.generateKey(
         {
           name: "RSA-OAEP",
@@ -58,15 +163,17 @@
         },
         true,
         ["encrypt", "decrypt"]
-      ).then((keyPair) => {
+      ).then(async (keyPair) => {
         const encryptButton = document.getElementById("send-message");
+        document.getElementById('bob-public-key').innerHTML = await exportCryptoKey(keyPair.publicKey);
         encryptButton.addEventListener("click", async() => {
-          let message = await encryptMessage(keyPair.publicKey);
+          const key = document.getElementById('alice-public-key');
+          let message = await encryptMessage(key);
           console.log(await decryptMessage(keyPair.privateKey, message))
-
         });
       });
 
     };
 </script>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
 </html>
