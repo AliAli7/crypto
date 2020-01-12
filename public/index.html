@@ -14,8 +14,8 @@
         <div class="terminal">
             <div class="yellow"></div>
             <p id="bob-public-key">MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAkpSiKzIeqMUF4KaYGGJL4qwOT7auEm4ZgrXwNSwxcYLR+6DvI9xyWAj+tL3ObMqSLRSn4QKAogPziFJdiezoiCfCwNvTAvWAtUwaMs161kzN86xyctgxahtkxoEhCKFvLsYm7ivd6BS1AeBDN4gelaArkjg8B7c0ysKw+33cs5/qI/LkyMN8tUt4UZsOJ8fFDeaJb4ZUGZzywxxVdGzQyZ9sOmBCg0NWcj/uBQQ76iPzO60DVAeKrwtqkHBt91iWcWXfxr5SODNZN5TLbXPOUN9h6A4B5ktJb3fY4xynJGZw7kWq7Tph6SQ1nbCfhQAfElB2gLmliiffZLMXgukmx6LvPSlARIHus4pyN0r+5ZvILhD+6MyMplkxDHi97IDuDufN6sh2FhVAHLATn0jKNqJt1ph6xfgXiXWgjm+f/C2xLrRsqrYYgFhF5RYx9ORdzN3sgSVgeVQYKyosG3AZNPQ8oL0bPe37h3DFhuPrM/G9aVtfVTPvO52SK0TEUkziPOLODdM2Ukwd7J4tsLweZ9a2ZtlYZvDs3gTXLYMeqWA1j+xwYlFU3v82Mrcn4yW1nEXnDJI39PxAztpzYNyidUZuyJWyWpo+DRdBET5K3gOMLezbNXeTMQji+y7hqErDEfX3RStsP/yKug+p0bgWKM9airkKosfuo7a5LgPAg/8CAwEAAQ==</p>
-            <button onclick="copyBobPubKey()" class="btn">Copy</button>
         </div>
+        <button onclick="copyBobPubKey()" class="btn">Copy</button>
     </section>
     <section class="">
         <h1>Alice's Key</h1>
@@ -27,9 +27,11 @@
     <section class="">
         <h1>Video</h1>
         <video id="video-box">Video stream not available.</video>
-        <button onclick="classifier.addImage('safe');">Safe</button>
-        <button onclick="classifier.addImage('unsafe');">Not Safe</button>
-        <button onclick="classifier.train(whileTraining)">Train</button>
+        <div class="controls">
+            <button class="btn" onclick="classifier.addImage('safe');">Safe</button>
+            <button class="btn" onclick="classifier.addImage('unsafe');">Not Safe</button>
+            <button class="btn" onclick="classifier.train(whileTraining)">Train</button>
+        </div>
     </section>
     <section class="chat-area">
         <h1>Chat area</h1>
