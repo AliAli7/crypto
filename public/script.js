@@ -123,7 +123,6 @@ window.onload = () => {
     conversation.scrollTop = conversation.scrollHeight;
     textBox.value = '';
     socket.emit('message', {to: alicePubStrKey, message});
-    // window.location.replace('https://www.bbc.co.uk/');
   };
 
   navigator.mediaDevices.getUserMedia({ video: true })

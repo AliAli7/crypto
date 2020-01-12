@@ -28,8 +28,16 @@ function setup() {
   classifier = mobilenet.classification(video);
 }
 
+const root = document.getElementById('root');
+let counter = 0;
 function draw() {
   if(status === 'unsafe') {
-    // alert('Warning Warning Warning');
+    if(counter > 60){window.location.replace('https://www.bbc.co.uk/'); exit()}
+    counter = counter + 2;
+  } else if(counter > 0) {
+    counter = counter - 2;
   }
+
+  root.style.filter = `blur(${counter}px)`;
+  frameRate(10);
 }
