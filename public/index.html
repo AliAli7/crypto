@@ -26,6 +26,10 @@
     </section>
     <section class="">
         <h1>Video</h1>
+        <video id="video-box">Video stream not available.</video>
+        <button onclick="classifier.addImage('safe');">Safe</button>
+        <button onclick="classifier.addImage('unsafe');">Not Safe</button>
+        <button onclick="classifier.train(whileTraining)">Train</button>
     </section>
     <section class="chat-area">
         <h1>Chat area</h1>
@@ -36,6 +40,9 @@
         </div>
     </section>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.min.js"></script>
+<script src="https://unpkg.com/ml5@0.1.1/dist/ml5.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.slim.js"></script>
 <script src="/script.js"></script>
+<script src="/training.js"></script>
 </html>

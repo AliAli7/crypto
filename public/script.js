@@ -7,6 +7,7 @@ window.onload = () => {
   const socket = io();
   const conversation = document.getElementById("conversation");
   const textBox = document.getElementById("text-box");
+  const videoStream = document.getElementById('video-box');
 
   const getMessageEncoding = () => {
     const messageBox = document.querySelector("#text-box");
@@ -123,6 +124,14 @@ window.onload = () => {
     textBox.value = '';
     socket.emit('message', {to: alicePubStrKey, message});
     // window.location.replace('https://www.bbc.co.uk/');
-  }
+  };
 
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+      videoStream.srcObject = stream;
+      videoStream.play();
+    })
+    .catch(function(err) {
+      console.log("An error occurred: " + err);
+    });
 };
