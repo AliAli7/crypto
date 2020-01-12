@@ -1,5 +1,12 @@
+const copyBobPubKey = () => {
+  var copyText = document.getElementById("bob-public-key").innerHTML;
+  navigator.clipboard.writeText(copyText).then(res => console.log(res)).catch(err => console.log(err));
+};
+
 window.onload = () => {
   const socket = io();
+  const conversation = document.getElementById("conversation");
+  const textBox = document.getElementById("text-box");
 
   const getMessageEncoding = () => {
     const messageBox = document.querySelector("#text-box");
@@ -88,18 +95,34 @@ window.onload = () => {
     document.getElementById('bob-public-key').innerHTML = bobPublicKey;
     socket.emit('join', bobPublicKey);
     sendBtn.addEventListener("click", async() => {
-      const alicePubStrKey = document.getElementById('alice-public-key').value;
-      if (alicePubStrKey.length !== 736) {alert('Invalid key'); return;}
-      const key = await importPublicKey(alicePubStrKey);
-      let message = await encryptMessage(key);
-      if (message.byteLength !== 512) {alert('Invalid Key'); return;}
-      socket.emit('message', {to: alicePubStrKey, message});
+      sendText();
     });
   });
 
   socket.on('message', async (msg) => {
     const message = await decryptMessage(privateKey, msg);
-    console.log(message);
+    conversation.scrollTop = conversation.scrollHeight;
+    conversation.insertAdjacentHTML('beforeend', `<p class="alice-says">${message}</p>`);
   });
+
+  textBox.addEventListener('keydown', function(e) {
+    if(e.keyCode === 13 && e.metaKey) {
+      sendText();
+    }
+  });
+
+  const sendText = async() => {
+    const alicePubStrKey = document.getElementById('alice-public-key').value;
+    if (alicePubStrKey.length !== 736) {alert('Invalid key'); return;}
+    const key = await importPublicKey(alicePubStrKey);
+    let message = await encryptMessage(key);
+    if (message.byteLength !== 512) {alert('Invalid Key'); return;}
+    let unEncMessage = textBox.value;
+    conversation.insertAdjacentHTML('beforeend', `<p class="bob-says">${unEncMessage}</p>`);
+    conversation.scrollTop = conversation.scrollHeight;
+    textBox.value = '';
+    socket.emit('message', {to: alicePubStrKey, message});
+    // window.location.replace('https://www.bbc.co.uk/');
+  }
 
 };
